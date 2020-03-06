@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+  {% for post in posts_list %}
+    <div class="card">
+      <div class="card-header">
+        <a href="{% url 'post_detail' post.pk %}">
+          <span class="font-weight-bold">{{ post.title }}</span> &middot;
+          <span class="text-muted"></span>
+        </a>
+        by {{ post.author }}
+        |
+        {{ post.date }}
+      </div>
+      <div class="card-body">
+        {{ post.body }}
+        <a href="{% url 'post_edit' post.pk %}">Edit</a> | <a href="{% url 'post_delete' post.pk %}">Delete</a>
+      </div>
+      <div class="card-footer text-center text-muted">
+        {% for comment in post.comments.all %}
+          <div>
+            <span class="font-weight-bold">{{ comment.author }}&middot;</span>
+            {{ comment }}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% endfor %}
+{% endblock content %}
